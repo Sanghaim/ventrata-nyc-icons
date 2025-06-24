@@ -23,6 +23,7 @@ You can override these settings via the CLI with `--env` flag, e.g.:
 ```bash
   npx cypress run --env device=mobile
 ```
+or creating a `cypress.env.json` file and set the variables there.
 
 
 ## 🚀 Getting Started
@@ -53,13 +54,7 @@ To run the Cypress end-to-end tests, follow these steps:
    This will serve the app at http://localhost:8080, which matches the `baseUrl` set in the Cypress config.
 
 4. **Run the tests:**
-
-   If you want to run test in interactive mode:
    ```bash
-   npx cypress open
+   npm run test
    ```
-   
-   To run in CLI:
-   ```bash
-   npx cypress run
-   ```
+   This command will spin up a local server on `http://localhost:8080/` by default and then runs the Cypress test.
