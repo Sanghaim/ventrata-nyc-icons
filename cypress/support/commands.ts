@@ -7,7 +7,7 @@ declare namespace Cypress {
      * @param args - Optional arguments to pass through to `cy.get()`.
      * @example cy.dataCy('greeting')
      */
-    getDataCy(selector: string, ...args: SelectOptions[]): Cypress.Chainable;
+    getDataCy(selector: string, ...args: Partial<SelectOptions>[]): Cypress.Chainable;
 
     /**
      * Custom command to find DOM element in parent element by `data-cy` attribute.
@@ -15,7 +15,7 @@ declare namespace Cypress {
      * @param args - Optional arguments to pass through to `cy.find()`.
      * @example cy.get('div').findCy('card')
      */
-    findCy(selector: string, ...args: SelectOptions[]): Cypress.Chainable;
+    findCy(selector: string, ...args: Partial<SelectOptions>[]): Cypress.Chainable;
 
     /**
      * Custom command that selects DOM elements whose `data-cy` attribute
@@ -26,7 +26,7 @@ declare namespace Cypress {
      * // Matches <div data-cy="user-card-123">
      * cy.getDataCyLike("user-card")
      */
-    getDataCyLike(selector: string, ...args: SelectOptions[]): Cypress.Chainable;
+    getDataCyLike(selector: string, ...args: Partial<SelectOptions>[]): Cypress.Chainable;
 
     /**
      * Custom command to find DOM element in parent element by given `data-cy` substring.
@@ -34,7 +34,7 @@ declare namespace Cypress {
      * @param args - Optional arguments to pass through to `cy.find()`.
      * @example cy.get('div').findCyLike('card')
      */
-    findCyLike(selector: string, ...args: SelectOptions[]): Cypress.Chainable;
+    findCyLike(selector: string, ...args: Partial<SelectOptions>[]): Cypress.Chainable;
   }
 }
 
