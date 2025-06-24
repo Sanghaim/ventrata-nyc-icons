@@ -19,11 +19,15 @@ test execution for the Ventrata Checkout application.
 
 Most notable are environment settings, that states the `apiUrl` and `device`.
 
+`device` variable expects one of the two values: `desktop` or `mobile`.
+
 You can override these settings via the CLI with `--env` flag, e.g.:
 ```bash
   npx cypress run --env device=mobile
 ```
 or creating a `cypress.env.json` file and set the variables there.
+
+
 
 
 ## 🚀 Getting Started
