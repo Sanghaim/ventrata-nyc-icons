@@ -1,0 +1,53 @@
+# 🧪 Ventrata E2E showcase
+
+Automated E2E test for the **NYC Icons Express** widget using [Cypress](https://www.cypress.io/).  
+Covers checkout flow scenario with edge case when no slots for attraction are available.
+
+## ⚙️ Requirements
+| Requirement | Version                                        |
+|-------------|------------------------------------------------|
+| Node.js     | `>=18.x` (LTS recommended)                     |
+| npm / yarn  | `>=8.6.0`                                      |
+| OS          | Windows 10+, Ubuntu 20.04+, macOS 11 and above |
+
+---
+
+## 🛠️ Configuration
+
+This project uses a custom Cypress configuration defined in `cypress.config.ts` to tailor 
+test execution for the Ventrata Checkout application.
+
+Most notable are environment settings, that states the `apiUrl` and `device`.
+
+You can override these settings via the CLI with `--env` flag, e.g.:
+```bash
+  npx cypress run --env device=mobile
+```
+
+
+## 🚀 Getting Started
+
+To run the Cypress end-to-end tests, follow these steps:
+
+1. **Clone the repo:**
+
+   ```bash
+   git clone https://github.com/Sanghaim/ventrata-nyc-icons.git
+   cd ventrata-nyc-icons
+
+2. **Install dependencies:**
+
+    ```bash
+    npm install
+
+3. **Run the tests:**
+   
+   If you want to run test in interactive mode:
+   ```bash
+   npx cypress open
+   ```
+   
+   To run in CLI:
+   ```bash
+   npx cypress run
+   ```
