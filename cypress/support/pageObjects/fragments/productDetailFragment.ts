@@ -28,6 +28,14 @@ export default class ProductDetailFragment {
   }
 
   /**
+   * Retrieves the travel date element for a product at the given index.
+   *
+   * @param {number} index - The index of the product to retrieve the travel date for.
+   */
+  getProductTravelDateByIndex(index: number): Cypress.Chainable {
+    return cy.getDataCy(`selected-travel-date-${index}`)
+  }
+  /**
    * Finds and select the last available day for booking.
    *
    * Checks if the last day in month is still available it navigates to the next month.

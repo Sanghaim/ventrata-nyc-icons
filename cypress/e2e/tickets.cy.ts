@@ -6,10 +6,15 @@ import QuestionsPage from '../support/pageObjects/questionsPage'
 import TicketsPage from '../support/pageObjects/ticketsPage'
 import SummaryPage from '../support/pageObjects/fragments/summaryPage'
 
+import ErrorBannerFragment from '../support/pageObjects/fragments/errorBannerFragment'
 import FooterFragment from '../support/pageObjects/fragments/footerFragment'
 import ProductDetailFragment from '../support/pageObjects/fragments/productDetailFragment'
 
-import { REQUIRED_ERROR_MESSAGE } from '../support/testConsts'
+import {
+  REQUIRED_ERROR_MESSAGE,
+  ALL_REQUIRED_PRODUCTS_ERROR_MESSAGE,
+  LIBERTY_REQUIRED_ERROR_MESSAGE
+} from '../support/testConsts'
 
 const actions = new Actions()
 
@@ -19,6 +24,7 @@ const questionsPage = new QuestionsPage()
 const summaryPage = new SummaryPage()
 const ticketsPage = new TicketsPage()
 
+const errorBannerFragment = new ErrorBannerFragment()
 const footerFragment = new FooterFragment()
 const productDetailFragment = new ProductDetailFragment()
 
@@ -52,6 +58,13 @@ describe('NYC Icons Express', () => {
     cy.wait('@calendar')
     productDetailFragment.calendar.should('contain.text', today).first().click()
     cy.wait('@firstProduct')
+
+    // User misses the 'Save' button under the product and clicks 'Continue' in the footer
+    footerFragment.footerButton.click()
+    errorBannerFragment.banner.should('contain.text', ALL_REQUIRED_PRODUCTS_ERROR_MESSAGE)
+    errorBannerFragment.closeButton.click()
+    errorBannerFragment.banner.should('not.exist')
+
     productDetailFragment.saveButton.click()
     productsPage.verifyProductCompleted(0)
     productsPage.counter.should('contain.text', '1/4 Selected')
@@ -76,25 +89,40 @@ describe('NYC Icons Express', () => {
     productsPage.verifyProductCompleted(0)
     productsPage.counter.should('contain.text', '1/4 Selected')
 
+    // User selects a first timeslot in the day, then changes his mind and selects the last timeslot
+    let selectedTimeSlot = ''
     productsPage.getProductButtonByIndex(1).click()
     cy.wait(['@calendar', '@secondProduct'])
+    productDetailFragment.timeslot.first().then((button) => selectedTimeSlot = button.text())
+    productDetailFragment.timeslot.first().click()
+    productDetailFragment.saveButton.click()
+    productsPage.verifyProductCompleted(1)
+    productsPage.counter.should('contain.text', '2/4 Selected')
+    cy.then(() => {
+      productDetailFragment.getProductTravelDateByIndex(1).should('contain.text', selectedTimeSlot.trim())
+    })
+
+    productDetailFragment.getProductTravelDateByIndex(1).click()
+    cy.wait(['@calendar', '@secondProduct'])
+    productDetailFragment.timeslot.last().then((button) => selectedTimeSlot = button.text())
     productDetailFragment.timeslot.last().click()
     productDetailFragment.saveButton.click()
     productsPage.verifyProductCompleted(1)
     productsPage.counter.should('contain.text', '2/4 Selected')
+    cy.then(() => {
+      productDetailFragment.getProductTravelDateByIndex(1).should('contain.text', selectedTimeSlot.trim())
+    })
 
 
-    productsPage.getProductButtonByIndex(2).click()
-    cy.wait('@thirdProduct')
-    productDetailFragment.saveButton.click()
-    productsPage.verifyProductCompleted(2)
-    productsPage.counter.should('contain.text', '3/4 Selected')
-
+    // User misses the last mandatory product, error banner disappears after the last product is opened
+    footerFragment.footerButton.click()
+    errorBannerFragment.banner.should('contain.text', LIBERTY_REQUIRED_ERROR_MESSAGE)
     productsPage.getProductButtonByIndex(3).click()
     cy.wait('@fourthProduct')
+    errorBannerFragment.banner.should('not.exist')
     productDetailFragment.saveButton.click()
     productsPage.verifyProductCompleted(3)
-    productsPage.counter.should('contain.text', '4/4 Selected')
+    productsPage.counter.should('contain.text', '3/4 Selected')
     footerFragment.footerButton.click()
 
     // Validate questions page and check if validations are in place
