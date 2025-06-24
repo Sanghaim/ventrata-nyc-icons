@@ -32,7 +32,7 @@ export default class ProductsPage {
 
   /**
    * Checks complete badge on product
-   * @param index
+   * @param index - index of product to be verified
    */
   verifyProductCompleted(index: number): Cypress.Chainable {
     return cy.getDataCy(`isCompleted-${index}`, { timeout: 80000 }).should('exist')
