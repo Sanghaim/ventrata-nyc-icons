@@ -47,7 +47,7 @@ To run the Cypress end-to-end tests, follow these steps:
    You can use [`http-server`](https://www.npmjs.com/package/http-server) to quickly spin up a local server:
 
    ```bash
-     npx http-server -p 8080
+   npx http-server -p 8080
    ```
    
    This will serve the app at http://localhost:8080, which matches the `baseUrl` set in the Cypress config.
