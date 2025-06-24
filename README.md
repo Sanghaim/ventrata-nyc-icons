@@ -29,19 +29,31 @@ You can override these settings via the CLI with `--env` flag, e.g.:
 
 To run the Cypress end-to-end tests, follow these steps:
 
+---
+
 1. **Clone the repo:**
 
    ```bash
    git clone https://github.com/Sanghaim/ventrata-nyc-icons.git
    cd ventrata-nyc-icons
-
+   
 2. **Install dependencies:**
 
     ```bash
     npm install
 
-3. **Run the tests:**
+3. **Serve the App:**
+   Make sure the app (e.g. `index.html`) is being served locally. 
+   You can use [`http-server`](https://www.npmjs.com/package/http-server) to quickly spin up a local server:
+
+   ```bash
+     npx http-server -p 8080
+   ```
    
+   This will serve the app at http://localhost:8080, which matches the `baseUrl` set in the Cypress config.
+
+4. **Run the tests:**
+
    If you want to run test in interactive mode:
    ```bash
    npx cypress open
