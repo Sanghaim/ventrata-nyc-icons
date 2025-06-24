@@ -62,7 +62,7 @@ describe('NYC Icons Express', () => {
     // User misses the 'Save' button under the product and clicks 'Continue' in the footer
     footerFragment.footerButton.click()
     errorBannerFragment.banner.should('contain.text', ALL_REQUIRED_PRODUCTS_ERROR_MESSAGE)
-    errorBannerFragment.closeButton.click()
+    errorBannerFragment.closeButton.click({ force: true })
     errorBannerFragment.banner.should('not.exist')
 
     productDetailFragment.saveButton.click()
